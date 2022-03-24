@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Loading, please wait...</p>
+    <script>
+
+        let start = true;
+
+        while (start) {
+            
+            let stop = true;
+
+            let num = Math.floor(Math.random() * 1000);
+            
+            console.log('Загаданное число: ', num);
+
+            let ans = prompt('Попробуйте угадать число от 1 до 999:');            
+            
+            while (stop) {
+                
+                console.log('Введеное число: ', ans);
+
+                if (ans === 'Выход') {
+                    start = false;
+                    break;
+                }
+                if (isNaN(ans) || 1 > ans > 999) {
+                    ans = prompt('Введите целое число от 1 до 999');
+                }
+                else if (ans > num) {
+                    ans = prompt('Загаданное число меньше!');
+                }
+                else if (ans < num) {
+                    ans = prompt('Загаданное число больше!');
+                }
+                else {
+                    alert('Вы угадали');
+                    stop = false;                
+                }
+            }
+        }
+    </script>
+</body>
+</html>
