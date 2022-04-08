@@ -6,29 +6,10 @@ rl.setPrompt('>');
 
 
 const linePromise = function(){
-    return new Promise((resolve) => {
-        rl.on('line', (answer) => {        
-            i += 1;
-            
-        if (isNaN(answer) || 1 > answer > 999) {
-            console.log('Введите целое число от 1 до 999');
-            console.log(`Попытка ${i}`)
-            rl.prompt();
-        }
-        else if (answer > num) {
-            console.log('Загаданное число меньше!');
-            console.log(`Попытка ${i}`)
-            rl.prompt();
-        }
-        else if (answer < num) {
-            console.log('Загаданное число больше!');
-            console.log(`Попытка ${i}`)
-            rl.prompt();
-        }
-        else {
-            console.log(`Вы угадали за ${i - 1} попыток(ки)`);
-            rl.close();         
-        }
+    return new Promise((resolve, reject) => {
+        rl.on('line', (answer, err) => {        
+            if (err) reject(err)
+            resolve(answer);
         }) 
     })
 }
@@ -44,8 +25,28 @@ console.log(`Попытка ${i}`)
 rl.prompt();
 
 
-async function findNumber() {
-    const answer = await linePromise();               
-}
 
-findNumber();
+linePromise().then((answer) => {
+    i += 1;
+            
+    if (isNaN(answer) || 1 > answer > 999) {
+        console.log('Введите целое число от 1 до 999');
+        console.log(`Попытка ${i}`)
+        rl.prompt();        
+    }
+    else if (answer > num) {
+        console.log('Загаданное число меньше!');
+        console.log(`Попытка ${i}`)
+        rl.prompt();        
+    }
+    else if (answer < num) {
+        console.log('Загаданное число больше!');
+        console.log(`Попытка ${i}`)
+        rl.prompt();        
+    }
+    else {
+        console.log(`Вы угадали за ${i - 1} попыток(ки)`);
+        rl.close();         
+    }               
+})
+
